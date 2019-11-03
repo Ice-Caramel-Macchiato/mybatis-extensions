@@ -42,7 +42,7 @@
     <distributionManagement>
         <repository>
             <id>mybatis-extensions</id>
-            <url>https://api.bintray.com/maven/kimsoungryoul/mybatis-extensions/mybatis-extensions/;publish=1</url>
+            <url>https://api.bintray.com/maven/icc/mybatis-extensions/mybatis-extensions/;publish=1</url>
         </repository>
     </distributionManagement>
 
