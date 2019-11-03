@@ -7,7 +7,6 @@
     <groupId>org.icc</groupId>
     <artifactId>mybatis-extensions</artifactId>
     <version>0.0.1</version>
-
     <packaging>jar</packaging>
 
     <name>mybatis-extensions</name>
@@ -16,9 +15,44 @@
     </description>
     <url>http://www.mybatis.org/mybatis-3</url>
 
+    <issueManagement>
+        <url>https://github.com/Ice-Caramel-Macchiato/mybatis-extensions/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>KimSoungRyoul</name>
+            <email>KimSoungRyoul@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/Ice-Caramel-Macchiato/mybatis-extensions</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>mybatis-extensions</id>
+            <url>https://api.bintray.com/maven/kimsoungryoul/mybatis-extensions/mybatis-extensions/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
+        <java.version>1.8</java.version>
         <maven.compiler.testCompilerArgument>-parameters</maven.compiler.testCompilerArgument>
         <module.name>org.icc.mybatisextensions</module.name>
+        <bintray.repo>icc/mybatis-extensions</bintray.repo>
+        <bintray.package>mybatis-extensions</bintray.package>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
@@ -59,12 +93,25 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>8</source>
-                        <target>8</target>
+                        <source>1.8</source>
+                        <target>1.8</target>
                         <testCompilerArgument>${maven.compiler.testCompilerArgument}</testCompilerArgument>
                     </configuration>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -85,6 +132,36 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.5.3</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- GPG Signature -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.5</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -96,7 +173,6 @@
             <artifactId>mybatis</artifactId>
             <version>3.4.0</version>
         </dependency>
-
 
 
         <!-- Test Tools -->
