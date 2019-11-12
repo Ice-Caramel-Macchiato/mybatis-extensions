@@ -6,11 +6,11 @@
 <configuration>
 
   <typeAliases>
-    <typeAlias alias="Customer" type="org.icc.mybatisextensions.domain.Customer"/>
+    <typeAlias alias="Customer" type="com.icc.mybatisextensions.domain.Customer"/>
   </typeAliases>
 
   <plugins>
-    <plugin interceptor="org.icc.mybatisextensions.plugins.encryption.EncryptionPlugin">
+    <plugin interceptor="com.icc.mybatisextensions.plugins.encryption.EncryptionPlugin">
       <property name="secretKey" value="IamSecretKey12345678"/>
     </plugin>
   </plugins>
@@ -34,7 +34,7 @@
   </databaseIdProvider>
 
   <mappers>
-    <mapper resource="org/icc/mybatisextensions/mappers/CustomerMapper.xml"/>
+    <mapper resource="com/icc/mybatisextensions/mappers/CustomerMapper.xml"/>
   </mappers>
 
 

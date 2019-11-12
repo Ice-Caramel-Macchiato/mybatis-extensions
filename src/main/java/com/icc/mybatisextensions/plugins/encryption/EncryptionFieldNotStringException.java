@@ -1,4 +1,4 @@
-package org.icc.mybatisextensions.plugins.encryption;
+package com.icc.mybatisextensions.plugins.encryption;
 
 import org.apache.ibatis.plugin.PluginException;
 

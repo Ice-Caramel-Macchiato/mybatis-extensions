@@ -1,6 +1,10 @@
-package org.icc.mybatisextensions.plugins.encryption;
+package com.icc.mybatisextensions.plugins.encryption;
 
 
+import com.icc.mybatisextensions.plugins.annotation.Encryption;
+import com.icc.mybatisextensions.plugins.encryption.cryptogram.AESCryptogramImpl;
+import com.icc.mybatisextensions.plugins.encryption.cryptogram.Cryptogram;
+import com.icc.mybatisextensions.plugins.encryption.cryptogram.SHA256CryptogramImpl;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.plugin.Interceptor;
@@ -12,10 +16,6 @@ import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.Reflector;
 import org.apache.ibatis.reflection.ReflectorFactory;
 import org.apache.ibatis.reflection.invoker.Invoker;
-import org.icc.mybatisextensions.plugins.annotation.Encryption;
-import org.icc.mybatisextensions.plugins.encryption.cryptogram.AESCryptogramImpl;
-import org.icc.mybatisextensions.plugins.encryption.cryptogram.Cryptogram;
-import org.icc.mybatisextensions.plugins.encryption.cryptogram.SHA256CryptogramImpl;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

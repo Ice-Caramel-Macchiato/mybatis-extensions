@@ -1,4 +1,4 @@
-package org.icc.mybatisextensions.plugins.encryption.cryptogram;
+package com.icc.mybatisextensions.plugins.encryption.cryptogram;
 
 public class CryptogramFailException extends Exception {
 

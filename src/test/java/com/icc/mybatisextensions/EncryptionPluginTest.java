@@ -1,11 +1,11 @@
-package org.icc.mybatisextensions;
+package com.icc.mybatisextensions;
 
+import com.icc.mybatisextensions.domain.Customer;
+import com.icc.mybatisextensions.mappers.CustomerMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.icc.mybatisextensions.domain.Customer;
-import org.icc.mybatisextensions.mappers.CustomerMapper;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -67,7 +67,7 @@ public static void createDB() throws SQLException, ClassNotFoundException {
     @Before
     public void createMybatisConfig() {
         try {
-            String resource = "org/icc/mybatisextensions/resources/config-mybatis-plugin-test.xml";
+            String resource = "com/icc/mybatisextensions/resources/config-mybatis-plugin-test.xml";
             Reader reader = Resources.getResourceAsReader(resource);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         } catch (IOException e) {

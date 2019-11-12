@@ -1,4 +1,4 @@
-package org.icc.mybatisextensions;
+package com.icc.mybatisextensions;
 
 import org.apache.ibatis.io.Resources;
 

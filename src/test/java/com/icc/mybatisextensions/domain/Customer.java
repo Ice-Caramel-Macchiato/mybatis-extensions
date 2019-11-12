@@ -1,8 +1,8 @@
-package org.icc.mybatisextensions.domain;
+package com.icc.mybatisextensions.domain;
 
 
-import org.icc.mybatisextensions.plugins.annotation.Encryption;
-import org.icc.mybatisextensions.plugins.encryption.CryptogramType;
+import com.icc.mybatisextensions.plugins.annotation.Encryption;
+import com.icc.mybatisextensions.plugins.encryption.CryptogramType;
 
 import java.util.Date;
 

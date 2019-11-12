@@ -1,8 +1,8 @@
-package org.icc.mybatisextensions.mappers;
+package com.icc.mybatisextensions.mappers;
 
 
 
-import org.icc.mybatisextensions.domain.Customer;
+import com.icc.mybatisextensions.domain.Customer;
 
 import java.util.List;
 

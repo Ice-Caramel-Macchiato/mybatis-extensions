@@ -1,7 +1,7 @@
-package org.icc.mybatisextensions.plugins.annotation;
+package com.icc.mybatisextensions.plugins.annotation;
 
 
-import org.icc.mybatisextensions.plugins.encryption.CryptogramType;
+import com.icc.mybatisextensions.plugins.encryption.CryptogramType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

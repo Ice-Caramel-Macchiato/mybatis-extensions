@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.icc.mybatisextensions.mappers.CustomerMapper">
+<mapper namespace="com.icc.mybatisextensions.mappers.CustomerMapper">
   <resultMap id="customerResultMap"
-    type="org.icc.mybatisextensions.domain.Customer">
+    type="com.icc.mybatisextensions.domain.Customer">
     <id column="id" property="id"/>
     <result column="name" property="name"/>
     <result column="email" property="email"/>
