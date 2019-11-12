@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
     <groupId>com.github.ice-caramel-macchiato</groupId>
     <artifactId>mybatis-extensions</artifactId>
     <version>0.0.2</version>
@@ -13,7 +14,7 @@
     <description>
         this is Mybatis Extension Modules
     </description>
-    <url>http://www.mybatis.org/mybatis-3</url>
+    <url>https://github.com/Ice-Caramel-Macchiato/mybatis-extensions/</url>
 
     <issueManagement>
         <url>https://github.com/Ice-Caramel-Macchiato/mybatis-extensions/issues</url>
@@ -49,7 +50,7 @@
     <properties>
         <java.version>1.8</java.version>
         <maven.compiler.testCompilerArgument>-parameters</maven.compiler.testCompilerArgument>
-        <module.name>org.icc.mybatisextensions</module.name>
+        <module.name>com.github.ice-caramel-macchiato</module.name>
         <bintray.repo>icc/mybatis-extensions</bintray.repo>
         <bintray.package>mybatis-extensions</bintray.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
