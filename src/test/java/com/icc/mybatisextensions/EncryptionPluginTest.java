@@ -1,7 +1,7 @@
 package com.icc.mybatisextensions;
 
-import com.icc.mybatisextensions.domain.Customer;
-import com.icc.mybatisextensions.mappers.CustomerMapper;
+import com.icc.mybatisextensions.testentity.TestEntity;
+import com.icc.mybatisextensions.testentity.TestEntityMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -32,20 +32,20 @@ public class EncryptionPluginTest {
 
     private static SqlSessionFactory sqlSessionFactory;
 
-//    @Test
-//    public void mapPluginShouldInterceptGet() throws IOException {
-//        String resource = "org/icc/mybatisextensions/config-mybatis-plugin-test.xml";
-//        Reader inputStream = Resources.getResourceAsReader(resource);
-//
-//        XMLConfigBuilder builder = new XMLConfigBuilder(inputStream);
-//        Configuration config = builder.parse();
-//        System.out.println(config);
-//    }
-@BeforeClass
-public static void createDB() throws SQLException, ClassNotFoundException {
-    Class.forName("org.hsqldb.jdbc.JDBCDriver");
-    initDatabase();
-}
+    private TestEntity testEntity;
+
+
+    @BeforeClass
+    public static void createDB() throws SQLException, ClassNotFoundException, IOException {
+        Class.forName("org.hsqldb.jdbc.JDBCDriver");
+        initDatabase();
+
+        String resource = "com/icc/mybatisextensions/resources/config-mybatis-plugin-test.xml";
+        Reader reader = Resources.getResourceAsReader(resource);
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+    }
 
     private static Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:hsqldb:mem:plugin_test_db", "sa", "");
@@ -54,75 +54,110 @@ public static void createDB() throws SQLException, ClassNotFoundException {
 
     private static void initDatabase() throws SQLException {
 
-        try (Connection connection = getConnection(); Statement statement = connection
-                .createStatement()) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
 
             statement.execute(
-                    "CREATE TABLE customer (id VARCHAR(100) NOT NULL, name VARCHAR(100) NOT NULL,reg_date DATETIME ,"
-                            + " description VARCHAR(100) NOT NULL, mileage INT NOT NULL, email VARCHAR(100) NOT NULL, PRIMARY KEY (id))");
+                    "CREATE TABLE TEST_ENTITY (id VARCHAR(100) NOT NULL," +
+                            "SHA256_ENCRYPTED_FIELD VARCHAR(256) ," +
+                            "AES256_ENCRYPTED_FIELD VARCHAR(100) ," +
+                            "REG_DATE DATETIME ," +
+                            "NON_ENCRYPTED_FIELD VARCHAR(100) ," +
+                            "INTEGER_FIELD INT ," +
+                            "PRIMARY KEY (id))");
             connection.commit();
         }
     }
 
     @Before
     public void createMybatisConfig() {
-        try {
-            String resource = "com/icc/mybatisextensions/resources/config-mybatis-plugin-test.xml";
-            Reader reader = Resources.getResourceAsReader(resource);
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Dump Data
+        TestEntity testEntity = new TestEntity();
+        testEntity.setId(UUID.randomUUID().toString());
+
+        testEntity.setRegDate(new Date());
+        testEntity.setIntegerField(1500);
+        testEntity.setNonEncryptedField("this is encryption not required content");
+        this.testEntity = testEntity;
+    }
+
+    @Test
+    public void tesInsertWithEncryptionPluginUsingAESCryptogramImpl() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            TestEntityMapper testEntityMapper = sqlSession.getMapper(TestEntityMapper.class);
+
+            // Given
+            TestEntity testEntity1 = this.testEntity;
+            testEntity1.setAes256EncryptedField("this is data");
+            // When
+            testEntityMapper.insert(testEntity1);
+            // Then
+        }
+
+    }
+
+    @Test
+    public void testSelectWithEncryptionPluginUsingAES256CryptogramImpl() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            TestEntityMapper testEntityMapper = sqlSession.getMapper(TestEntityMapper.class);
+
+            // Given
+            TestEntity testEntity1 = this.testEntity;
+            String data = "this is data";
+            testEntity1.setAes256EncryptedField(data);
+            testEntityMapper.insert(testEntity1);
+
+            // When
+            List<TestEntity> selectedEntityList = testEntityMapper.selectAll();
+            // Then
+            assertEquals(selectedEntityList.get(0).getAes256EncryptedField(), data);
         }
     }
 
     @Test
-    public void testEncryptionPlugedSuccess() {
+    public void tesInsertWithEncryptionPluginUsingSHACryptogramImpl() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            TestEntityMapper testEntityMapper = sqlSession.getMapper(TestEntityMapper.class);
 
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            CustomerMapper customerMapper = sqlSession.getMapper(CustomerMapper.class);
-            String id = UUID.randomUUID().toString();
-            String email = "KimSoungRyoul@gmail.com";
-            String name = "SoungRyoul Kim";
-
-            Customer customer = new Customer();
-            customer.setId(id);
-            customer.setEmail(email);
-            customer.setName(name);
-            customer.setRegDate(new Date());
-            customer.setMileage(1500);
-            customer.setDescription("this is encryption not required content");
-            customerMapper.insert(customer);
-
-            String id2 = UUID.randomUUID().toString();
-            Customer customer2 = new Customer();
-            customer2.setId(id2);
-            customer2.setEmail(email + "2");
-            customer2.setName(name + "2");
-            customer2.setRegDate(new Date());
-            customer2.setMileage(15002);
-            customer2.setDescription("this is encryption not required content2");
-            customerMapper.insert(customer2);
-
-            List<Customer> selectedCustomerList = customerMapper.selectAll();
-
-            for (Customer selectedCustomer : selectedCustomerList) {
-                if (selectedCustomer.getId().equals(id)) {
-                    assertEquals(email, selectedCustomer.getEmail());
-                    assertNotEquals(name, selectedCustomer.getName());
-                } else {
-                    assertEquals(email + "2", selectedCustomer.getEmail());
-                    assertNotEquals(name + "2", selectedCustomer.getName());
-                }
-            }
-            sqlSession.rollback();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            sqlSession.close();
+            // Given
+            TestEntity testEntity1 = this.testEntity;
+            testEntity1.setSha256EncryptedField("this is data");
+            // When
+            testEntityMapper.insert(testEntity1);
+            // Then
         }
+    }
 
+    @Test
+    public void testSelectWithEncryptionPluginUsingSHA256CryptogramImpl() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            TestEntityMapper testEntityMapper = sqlSession.getMapper(TestEntityMapper.class);
+
+            // Given
+            TestEntity testEntity1 = this.testEntity;
+            String data = "this is data";
+            testEntity1.setSha256EncryptedField(data);
+            testEntityMapper.insert(testEntity1);
+            // When
+            List<TestEntity> selectedEntityList = testEntityMapper.selectAll();
+            // Then
+            assertNotEquals(selectedEntityList.get(0).getSha256EncryptedField(), data);
+        }
+    }
+
+    @Test
+    public void testSelectWithNonEncryptionPlugin() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            TestEntityMapper testEntityMapper = sqlSession.getMapper(TestEntityMapper.class);
+
+            // Given
+            TestEntity testEntity1 = this.testEntity;
+            testEntityMapper.insert(testEntity1);
+            // When
+            List<TestEntity> selectedEntityList = testEntityMapper.selectAll();
+            // Then
+            assertEquals(selectedEntityList.get(0).getNonEncryptedField(), testEntity1.getNonEncryptedField());
+        }
     }
 
 }
