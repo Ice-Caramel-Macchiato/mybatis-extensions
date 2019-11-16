@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icc.mybatisextensions.testentity.TestEntityMapper">
+    <resultMap id="testEntityResultMap"
+               type="com.icc.mybatisextensions.testentity.TestEntity">
+        <id column="id" property="id"/>
+        <result column="SHA256_ENCRYPTED_FIELD" property="sha256EncryptedField"/>
+        <result column="AES256_ENCRYPTED_FIELD" property="aes256EncryptedField"/>
+        <result column="REG_DATE" property="regDate"/>
+        <result column="NON_ENCRYPTED_FIELD" property="nonEncryptedField"></result>
+        <result column="INTEGER_FIELD" property="integerField"></result>
+    </resultMap>
+
+    <select id="selectAll" resultMap="testEntityResultMap">
+		SELECT
+		ID,
+		SHA256_ENCRYPTED_FIELD,
+		AES256_ENCRYPTED_FIELD,
+		REG_DATE,
+		NON_ENCRYPTED_FIELD,
+		INTEGER_FIELD
+		FROM TEST_ENTITY
+	</select>
+
+    <insert id="insert" parameterType="testEntity">
+		INSERT INTO TEST_ENTITY
+		(ID,
+		SHA256_ENCRYPTED_FIELD,
+		AES256_ENCRYPTED_FIELD,
+		REG_DATE,
+		NON_ENCRYPTED_FIELD,
+		INTEGER_FIELD)
+		VALUES
+		(#{id}, #{sha256EncryptedField}, #{aes256EncryptedField},
+		#{regDate},#{nonEncryptedField},#{integerField})
+	</insert>
+
+
+</mapper>

@@ -6,7 +6,7 @@
 <configuration>
 
   <typeAliases>
-    <typeAlias alias="Customer" type="com.icc.mybatisextensions.domain.Customer"/>
+    <typeAlias alias="TestEntity" type="com.icc.mybatisextensions.testentity.TestEntity"/>
   </typeAliases>
 
   <plugins>
@@ -34,7 +34,7 @@
   </databaseIdProvider>
 
   <mappers>
-    <mapper resource="com/icc/mybatisextensions/mappers/CustomerMapper.xml"/>
+    <mapper resource="com/icc/mybatisextensions/testentity/TestEntityMapper.xml"/>
   </mappers>
 
 
