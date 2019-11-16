@@ -62,10 +62,11 @@ public class EncryptionPlugin implements Interceptor {
                     Invoker getter = reflector.getGetInvoker(field.getName());
 
                     Object value = getter.invoke(parameterObject, null);
-                    String crypValue = cryptograms.get(field.getAnnotation(Encryption.class).type())
-                            .encrypt(value);
-                    reflector.getSetInvoker(field.getName()).invoke(parameterObject, new Object[]{crypValue});
-
+                    if (value != null) {
+                        String cryptogramValue = cryptograms.get(field.getAnnotation(Encryption.class).type())
+                                .encrypt(value);
+                        reflector.getSetInvoker(field.getName()).invoke(parameterObject, new Object[]{cryptogramValue});
+                    }
                 }
             }
             return invocation.proceed();
