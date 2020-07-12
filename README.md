@@ -4,3 +4,16 @@
 
 useful mybatis Adapter Modules
 
+
+<img width="580" alt="2018-12-19 5 48 42" src="https://user-images.githubusercontent.com/24240623/50209133-5c5c6100-03b6-11e9-89da-a22652d848f0.png">
+
+
+
+![2018-12-19 5 38 19](https://user-images.githubusercontent.com/24240623/50209067-35059400-03b6-11e9-9f82-b22bf2d535c7.png)
+
+
+
+### if you insert Customer(Entity), plugin encrypt annotated Fields
+### and if you select Customer(Entity), plugin decrypt annotated Fieleds (except AES)
+
+<img width="1401" alt="2018-12-19 5 55 08" src="https://user-images.githubusercontent.com/24240623/50209505-44391180-03b7-11e9-8d30-af6b7c2eba45.png">
